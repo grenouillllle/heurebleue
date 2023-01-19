@@ -7,6 +7,7 @@ public class activationCarte : MonoBehaviour
 {
     float compteur = 8;
     bool danslazone = false;
+    bool transformationDemarre = false;
     
 
     
@@ -32,20 +33,27 @@ public class activationCarte : MonoBehaviour
             {
                 GameObject.Find("refEnigme1").GetComponent<MeshRenderer>().enabled = false;
                 GameObject.Find("refEnigme1").GetComponent<SphereCollider>().enabled = false;
+                transformationDemarre = true;
             }
+
+       
+               
+        }
+
+        if (GameObject.Find("refEnigme1").GetComponent<objetVisible>().objetvu == false && transformationDemarre == false)
+        {
+            compteur = 8;
+        }
+
+        if (transformationDemarre == true)
+        {
+            compteur -= 1 * Time.deltaTime;
             if (compteur <= 0)
             {
                 GameObject.Find("resultatEnigme1").GetComponent<MeshRenderer>().enabled = true;
                 GameObject.Find("resultatEnigme1").GetComponent<SphereCollider>().enabled = true;
             }
         }
-
-        if (GameObject.Find("refEnigme1").GetComponent<objetVisible>().objetvu == false)
-        {
-            compteur = 8;
-        }
-
-
 
 
     }
