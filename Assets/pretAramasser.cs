@@ -5,7 +5,12 @@ using UnityEngine;
 public class pretAramasser : MonoBehaviour
 {
     public string nomObjet;
+    public GameObject carteAajouter;
     bool pretRamasser = false;
+    bool activemusique = false;
+    float compteurmusique = 4;
+    
+
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +25,12 @@ public class pretAramasser : MonoBehaviour
         {
             GameObject.Find("Player").GetComponent<Player>().aCarte1 = true;
             GameObject.Find("Carte1").GetComponent<SpriteRenderer>().enabled = false;
+            GameObject.Find("Player").GetComponent<Player>().cartepostale.Add(carteAajouter);
+            GameObject.Find("SonCarte1").GetComponent<AudioSource>().Play();
+            activemusique = true;
 
         }
+
         else if (pretRamasser == true && Input.GetKeyDown(KeyCode.Space) && nomObjet == "carte2")
         {
             GameObject.Find("Player").GetComponent<Player>().aCarte2 = true;
@@ -37,6 +46,22 @@ public class pretAramasser : MonoBehaviour
         {
             print("Vous pouvez ramasser");
         }
+
+        if (activemusique == true)
+        {
+            compteurmusique -= 1 * Time.deltaTime;
+            print(compteurmusique);
+            if (compteurmusique <= 0)
+            {
+                GameObject.Find("SonCarte1").GetComponent<AudioSource>().Stop();
+                Destroy(gameObject);
+            }
+        }
+
+
+
+   
+        
 
     }
 

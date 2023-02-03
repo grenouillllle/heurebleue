@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class activationCarte : MonoBehaviour
 {
-    float compteur = 8;
+    float compteur = 5;
     bool danslazone = false;
-    bool transformationDemarre = false;
-    
-
+    public bool transformationDemarre = false;
     
 
 
@@ -25,15 +23,17 @@ public class activationCarte : MonoBehaviour
     void Update()
     {
        
-        if (danslazone == true && GameObject.Find("Player").GetComponent<Player>().aCarte1 == true && GameObject.Find("refEnigme1").GetComponent<objetVisible>().objetvu == true)
+        if (danslazone == true && GameObject.Find("refEnigme1").GetComponent<objetVisible>().objetvu == true && GameObject.Find("Player").GetComponent<Player>().cartepostale[GameObject.Find("Player").GetComponent<Player>().compteurlist].name == "Carte1" && transformationDemarre==false)
         {
             compteur -= 1 * Time.deltaTime;
             print(compteur);
-            if (compteur <= 3)
+            if (compteur <= 2)
             {
                 GameObject.Find("refEnigme1").GetComponent<MeshRenderer>().enabled = false;
                 GameObject.Find("refEnigme1").GetComponent<SphereCollider>().enabled = false;
                 transformationDemarre = true;
+                print(transformationDemarre);
+                GameObject.Find("SonCarte1").GetComponent<creersons>().lancemusique();
             }
 
        
@@ -42,7 +42,7 @@ public class activationCarte : MonoBehaviour
 
         if (GameObject.Find("refEnigme1").GetComponent<objetVisible>().objetvu == false && transformationDemarre == false)
         {
-            compteur = 8;
+            compteur = 5;
         }
 
         if (transformationDemarre == true)
@@ -52,6 +52,7 @@ public class activationCarte : MonoBehaviour
             {
                 GameObject.Find("resultatEnigme1").GetComponent<MeshRenderer>().enabled = true;
                 GameObject.Find("resultatEnigme1").GetComponent<SphereCollider>().enabled = true;
+                GameObject.Find("Player").GetComponent<Player>().cartepostale[0].SetActive(false);
             }
         }
 
@@ -64,5 +65,11 @@ public class activationCarte : MonoBehaviour
         
     }
 
-    
+    private void OnTriggerExit(Collider other)
+    {
+        danslazone = false;
+    }
+
+
+
 }
